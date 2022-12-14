@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/office-service
+    username: postgres
+    password: Simform@123
+  jpa:
+    hibernate:
+      show-sql: false
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  mail:
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          starttls:
+            enable: true
+            required: true
+    host: smtp.gmail.com
+    username: aesha.shingala@gmail.com
+    password: bckkoxhfidfzipcc
+    port: 587
+
+redirect-url:
+  reset-password: https://localhost:8080/
