@@ -28,7 +28,7 @@ public class LoginController {
 
     @PostMapping("/resetPassword")
     public ResponseEntity<GenericResponse> generateResetPasswordToken(@RequestParam("email") String email) throws MessagingException {
-        return new ResponseEntity<>(new GenericResponse(true, "password reset successfully", userService.generateResetPasswordToken(email), HttpStatus.OK.value(), LocalDateTime.now()), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse(true, "password reset mail sent successfully", userService.generateResetPasswordToken(email), HttpStatus.OK.value(), LocalDateTime.now()), HttpStatus.OK);
     }
 
     @PostMapping("/setPassword")

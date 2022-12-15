@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -22,9 +25,9 @@ spring:
             enable: true
             required: true
     host: smtp.gmail.com
-    username: aesha.shingala@gmail.com
-    password: bckkoxhfidfzipcc
+    username: officeservicehelpdesk@gmail.com
+    password: fpxyzzlobyaagkpn
     port: 587
 
 redirect-url:
-  reset-password: https://localhost:8080/
+  reset-password: https://localhost:8081/

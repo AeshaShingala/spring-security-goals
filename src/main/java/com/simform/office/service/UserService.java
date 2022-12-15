@@ -9,6 +9,7 @@ import com.simform.office.repository.UserRepository;
 import com.simform.office.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -83,14 +85,8 @@ public class UserService {
         return "Success";
     }
 
-    @PostFilter(value = "filterObject.email != authentication.principal.username")
-    public List<User> getUsers() {
-        System.out.println(userRepository.findAll().stream().filter(user -> !user.isDeleted()).toList());
-        return userRepository.findAll();
-    }
-
-/*
-    @PostFilter(value = "filterObject.email != authentication.principal.username")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostFilter("filterObject.email != authentication.principal.username")
     public List<UserDetails> getUserDetails() {
         return userRepository.findAll().stream()
                 .filter(user -> !user.isDeleted())
@@ -99,8 +95,8 @@ public class UserService {
                         user.getEmail(),
                         user.getPhoneNumber(),
                         user.getRole().getRole())
-                ).toList();
-    }*/
+                ).collect(Collectors.toList());
+    }
 
     public List<UserDetails> getEmployees() {
         return userRepository.findAll().stream()
