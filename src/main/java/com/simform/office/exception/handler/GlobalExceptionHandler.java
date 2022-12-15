@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
@@ -53,5 +55,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     public final ResponseEntity<GenericResponse> handleAccessDeniedException(AccessDeniedException exception) {
         return new ResponseEntity<>(new GenericResponse(false, exception.getMessage(), new EmptyJsonBody(), HttpStatus.FORBIDDEN.value(), LocalDateTime.now()), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = IllegalStateException.class)
+    public final ResponseEntity<GenericResponse> handleIllegalStateException(IllegalStateException exception) {
+        return new ResponseEntity<>(new GenericResponse(false, exception.getMessage(), new EmptyJsonBody(), HttpStatus.CONFLICT.value(), LocalDateTime.now()), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(value = IOException.class)
+    public final ResponseEntity<GenericResponse> handleIOException(IOException exception) {
+        return new ResponseEntity<>(new GenericResponse(false, exception.getMessage(), new EmptyJsonBody(), HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = URISyntaxException.class)
+    public final ResponseEntity<GenericResponse> handleURISyntaxException(URISyntaxException exception) {
+        return new ResponseEntity<>(new GenericResponse(false, exception.getMessage(), new EmptyJsonBody(), HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
